@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export GO_ORIG_BIN=$(which go)
+export PATH=$PWD:$PATH
+export REPO_DIR=$PWD
+present -use_playground=false -base theme "$@"
