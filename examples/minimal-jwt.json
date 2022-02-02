@@ -1,0 +1,72 @@
+// START HEADER OMIT
+{
+    "alg": "EdDSA",
+    "typ": "JWT"
+}
+// END HEADER OMIT
+
+// START PAYLOAD OMIT
+{
+    "aud": "api",
+    "exp": 1642982336,
+    "iat": 1642982276,
+    "iss": "http://localhost:8081",
+    "nbf": 1642982276,
+    "roles": [
+        "admin",
+        "basic"
+    ],
+    "user": "admin"
+}
+// END PAYLOAD OMIT
+
+// START HEADERBASE64 OMIT
+eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9
+// END HEADERBASE64 OMIT
+
+// START PAYLOADBASE64 OMIT
+eyJhdWQiOiJhcGkiLCJleHAiOjE2NDI5ODIzMzYsImlhdCI6MTY0Mjk4MjI3NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwibmJmIjoxNjQyOTgyMjc2LCJyb2xlcyI6WyJhZG1pbiIsImJhc2ljIl0sInVzZXIiOiJhZG1pbiJ9
+// END PAYLOADBASE64 OMIT
+
+// START SIGNATURE OMIT
+privateKey = readED(~/my-ed.pem)
+signature = getSignature(HEADER, PAYLOAD, privateKey)
+print(signature)
+// END SIGNATURE OMIT
+
+// START SIGNATURE EXAMPLE OMIT
+XEZW5O1wHDhmT-5Qm42uOoe728pDF4HX4c3OCZukYPqFBX2NlDyUdlOxUdT5i_ZhIzq-SoBfr6dhRvkk1mU-Dg
+// END SIGNATURE EXAMPLE OMIT
+
+// START FINAL OMIT
+eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhcGkiLCJleHAiOjE2NDI5ODIzMzYsIml
+hdCI6MTY0Mjk4MjI3NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgxIiwibmJmIjoxNjQyOTgyMjc
+2LCJyb2xlcyI6WyJhZG1pbiIsImJhc2ljIl0sInVzZXIiOiJhZG1pbiJ9.XEZW5O1wHDhmT-5Qm42uOo
+e728pDF4HX4c3OCZukYPqFBX2NlDyUdlOxUdT5i_ZhIzq-SoBfr6dhRvkk1mU-Dg
+// END FINAL OMIT
+
+// START VALIDATION OMIT
+// read public key
+publicKey = readED(~/my-ed.pem.pub)
+
+// parse token to a struct
+token, err = parse(TOKEN_STRING)
+
+// check signature of token
+err = token.Verify(publicKey)
+
+// check validity of token
+// using claims like nbf and exp
+err = token.Validate()
+// END VALIDATION OMIT
+
+// START VALIDATION SIMPLE OMIT
+// read public key
+publicKey = readED(~/my-ed.pem.pub)
+token, err := parseToken(token)
+// END VALIDATION SIMPLE OMIT
+
+// START KEYGEN OMIT
+openssl genpkey -algorithm ED25519 -outform pem -out auth.ed
+openssl pkey -in auth.ed -pubout > auth.ed.pub
+// END KEYGEN OMIT
