@@ -11,7 +11,7 @@ DevX Engineer, Weave
 
 ```sh
 # Gen a new keypair
-openssl genpkey -out auth.ed
+openssl genpkey -algorithm ED25519 -outform pem -out auth.ed
 openssl pkey -in auth.ed -pubout > auth.ed.pub
 
 ## try it with a local issuer
